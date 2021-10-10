@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, column, computed } from '@ioc:Adonis/Lucid/Orm'
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -7,6 +7,11 @@ export default class User extends BaseModel {
 
   @column()
   public name: string
+
+  @computed()
+  public get firstName() {
+    return this.name.split(' ')[0]
+  }
 
   @column()
   public email: string

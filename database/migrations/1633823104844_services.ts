@@ -15,6 +15,7 @@ export default class Services extends BaseSchema {
         .inTable('users')
         .onUpdate('CASCADE')
         .onDelete('CASCADE')
+        .notNullable()
       table.timestamp('created_at', { useTz: true })
       table.timestamp('updated_at', { useTz: true })
     })

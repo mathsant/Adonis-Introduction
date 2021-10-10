@@ -12,15 +12,26 @@ export default class Service extends BaseModel {
   @column()
   public describe: string
 
-  @column()
+  @column({ serializeAs: null })
   public userId: number
 
   @belongsTo(() => User, { foreignKey: 'userId' })
   public user: BelongsTo<typeof User>
 
-  @column.dateTime({ autoCreate: true })
+  @column.dateTime({
+    autoCreate: true,
+    serialize: (value: DateTime) => {
+      return value.toFormat('dd/MM/yyyy HH:mm:ss')
+    },
+  })
   public createdAt: DateTime
 
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  @column.dateTime({
+    autoCreate: true,
+    autoUpdate: true,
+    serialize: (value: DateTime) => {
+      return value.toFormat('dd/MM/yyyy HH:mm:ss')
+    },
+  })
   public updatedAt: DateTime
 }

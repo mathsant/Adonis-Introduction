@@ -4,7 +4,7 @@ import ServiceValidator from 'App/Validators/Service/ServiceValidator'
 
 export default class ServicesController {
   public async index({}: HttpContextContract) {
-    const services = await Service.query().orderBy('id')
+    const services = await Service.query().orderBy('id', 'asc').preload('user')
     return services
   }
 
@@ -12,7 +12,6 @@ export default class ServicesController {
     const data = await request.validate(ServiceValidator)
 
     const service = await Service.create(data)
-    await service.preload('user')
     return service
   }
 
