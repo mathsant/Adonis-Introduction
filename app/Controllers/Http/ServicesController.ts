@@ -10,7 +10,9 @@ export default class ServicesController {
 
   public async store({ request }: HttpContextContract) {
     const data = await request.validate(ServiceValidator)
+
     const service = await Service.create(data)
+    await service.preload('user')
     return service
   }
 

@@ -8,6 +8,13 @@ export default class Services extends BaseSchema {
       table.increments('id')
       table.double('value').notNullable()
       table.text('describe', 'longtext').notNullable()
+      table
+        .integer('user_id')
+        .unsigned()
+        .references('id')
+        .inTable('users')
+        .onUpdate('CASCADE')
+        .onDelete('CASCADE')
       table.timestamp('created_at', { useTz: true })
       table.timestamp('updated_at', { useTz: true })
     })

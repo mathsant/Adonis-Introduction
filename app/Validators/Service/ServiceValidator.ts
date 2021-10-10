@@ -7,6 +7,7 @@ export default class ServiceValidator {
   public schema = schema.create({
     value: schema.number(),
     describe: schema.string({ trim: true }),
+    user_id: schema.number(),
   })
 
   public messages = {
