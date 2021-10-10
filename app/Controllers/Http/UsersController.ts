@@ -1,5 +1,6 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import User from 'App/Models/User'
+import { StoreValidator, UpdateValidator } from 'App/Validators/User'
 // import Database from '@ioc:Adonis/Lucid/Database'
 
 export default class UsersController {
@@ -9,8 +10,8 @@ export default class UsersController {
   }
 
   public async store({ request }: HttpContextContract) {
-    const data = request.only(['name', 'email'])
-    const user = User.create(data)
+    const data = await request.validate(StoreValidator)
+    const user = await User.create(data)
     return user
   }
 
@@ -23,7 +24,7 @@ export default class UsersController {
 
   public async update({ params, request }: HttpContextContract) {
     const user = await User.findOrFail(params.id)
-    const data = request.only(['name', 'email'])
+    const data = await request.validate(UpdateValidator)
 
     user.merge(data)
     await user.save()
